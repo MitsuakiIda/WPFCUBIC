@@ -1,0 +1,82 @@
+﻿<Window x:Class="WpfCube.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Height="525" Width="525"
+        WindowStyle="None"
+        MouseLeftButtonDown="Window_MouseDown" Background="Black" MouseDoubleClick="Window_MouseDoubleClick" MouseWheel="Window_MouseWheel" MouseLeftButtonUp="Window_MouseUp" Loaded="Window_Loaded"  ResizeMode="CanResizeWithGrip" KeyDown="Window_KeyDown">
+    <Window.Resources>
+        <ControlTemplate x:Key="ButtonTemplate"  TargetType="Button">
+
+            <Border Background="{TemplateBinding Background}">
+                <ContentPresenter Content="{TemplateBinding Content}"
+           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+            </Border>
+        </ControlTemplate>
+        <BitmapImage x:Key="SampleImage" UriSource="Images/blue.png" />
+    </Window.Resources>
+    <DockPanel Name="dockPanel1" VerticalAlignment="Stretch">
+        <DockPanel Height="24" Name="dockPanel2" DockPanel.Dock="Top" VerticalAlignment="Top" LastChildFill="False">
+            <ComboBox Height="24" Name="comboBox1" Width="44" SelectedIndex="1" Background="Black" Foreground="RoyalBlue" BorderThickness="0" SelectionChanged="comboBox1_SelectionChanged">
+                <ComboBoxItem Content="1" />
+                <ComboBoxItem Content="3" />
+                <ComboBoxItem Content="5" />
+                <ComboBox.BorderBrush>
+                    <SolidColorBrush />
+                </ComboBox.BorderBrush>
+            </ComboBox>
+            <Button Content="Build" Height="23" Name="button1" Width="75" Click="button1_Click" Background="Black" Foreground="RoyalBlue" />
+            <Button Content="Shuffle" Height="23" Name="button2" Width="75" Click="button2_Click" Background="Black" Foreground="RoyalBlue" />
+            <CheckBox Content="Axis" Height="16" Name="checkBox1" Foreground="RoyalBlue" Click="checkBox1_Click" />
+            <Button Height="24" Name="CloseButton" Width="24" HorizontalAlignment="Right" Template="{StaticResource ButtonTemplate}" Background="Transparent" BorderThickness="0" BorderBrush="{x:Null}" Click="CloseButton_Click" DockPanel.Dock="Right">
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="Button.MouseEnter">
+
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation  
+                                BeginTime="0:0:0" Duration="0:0:0.2" 
+                                To="1"
+                                Storyboard.TargetName="CloseImage"
+                                Storyboard.TargetProperty="Opacity" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="Button.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation  
+                                BeginTime="0:0:0" Duration="0:0:0.2" 
+                                From="1"
+                                Storyboard.TargetName="CloseImage"
+                                Storyboard.TargetProperty="Opacity" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>
+                <Button.Content>
+                        <Image Name="CloseImage" Source="/WpfCube;component/noBorder_120.bmp" Opacity="0.2" />
+                        <!--TextBlock Text="終了" Padding="0,3,0,0" /-->
+                </Button.Content>
+            </Button>
+        </DockPanel>
+        <Viewport3D Name="viewPort3D" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Viewport3D.Camera>
+                <!--PerspectiveCamera x:Name="camera" NearPlaneDistance="0.0" UpDirection="0,1,0" Position="0,0,20" LookDirection="0,0,-1" /-->
+                <PerspectiveCamera  x:Name="camera"  LookDirection="0,0,-1" Position="0,0,20" />
+            </Viewport3D.Camera>
+            <!--tools:ScreenSpaceLines3D Points="0,0,0 0,0,10" Color="Yellow" Thickness="10" /-->
+            <!-- 光源 -->
+            <ModelVisual3D x:Name="ambient">
+                <ModelVisual3D.Content>
+                    <AmbientLight Color="#000000" />
+                </ModelVisual3D.Content>
+            </ModelVisual3D>
+            <ModelVisual3D>
+                <ModelVisual3D.Content>
+                    <DirectionalLight x:Name="light1" Color="White" Direction="0,0,-1" />
+                </ModelVisual3D.Content>
+            </ModelVisual3D>
+            </Viewport3D>
+    </DockPanel>
+</Window>
