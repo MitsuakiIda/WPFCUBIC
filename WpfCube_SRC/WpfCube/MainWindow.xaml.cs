@@ -16,7 +16,7 @@ using System.Windows.Media.Animation;
 using System.Threading;
 using System.Diagnostics;
 using System.Windows.Threading;
-using Microsoft.VisualStudio.Shell.Interop;
+//using Microsoft.VisualStudio.Shell.Interop;
 namespace WpfCube
 {
     public  enum CUBEKIND
